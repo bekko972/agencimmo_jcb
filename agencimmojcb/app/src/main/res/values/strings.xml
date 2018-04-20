@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">agenc immo jcb</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="password">Mot de passe</string>
+    <string name="connexion">Se connecter</string>
+    <string name="afficher_maison">Afficher les maisons</string>
+    <string name="achat">%1$s €</string>
+
+</resources>
