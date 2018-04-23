@@ -5,5 +5,10 @@
     <string name="connexion">Se connecter</string>
     <string name="afficher_maison">Afficher les maisons</string>
     <string name="achat">%1$s €</string>
+    <string name="description_image">Photo de la maison sélectionnée…</string>
+    <string name="description_image_maisons">Photos des maisons</string>
+    <string name="url_maisons">http://192.168.21.69:81/agenceimmo/%1$s</string>
+    <string name="prix_maisons">%1$s €</string>
+    <string name="superficie">%1$s m²</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.utilisateur.agencimmojcb.activitys;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,13 +32,14 @@ public class MaisonsActivity extends AppCompatActivity {
     TextView prenomAgent;
     ListView listeMaisons;
     Agent agent = new Agent();
+    Maison maisons[] = new Maison[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maisons);
 
-        prenomAgent = (TextView) findViewById(R.id.tv_pseudo_vue3);
+        prenomAgent = findViewById(R.id.tv_pseudo_vue3);
         AfficherPrenomAgent();
 
         new AfficherMaisons().execute();
@@ -64,63 +66,17 @@ public class MaisonsActivity extends AppCompatActivity {
         }
     }
 
-    public class AfficherMaisons extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(agencimmojcb972.getAppContext(), "Début du traitement asynchrone", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected String doInBackground(String... arg0) {
-
-            try {
-                GetRequete voirMaisons = new GetRequete();
-                String reponseVoirMaisons = voirMaisons.get("http://192.168.1.13:81/agenceimmo/mobile/mobile_maisons.php");
-                System.out.println(reponseVoirMaisons);
-
-                return reponseVoirMaisons;
-
-            /*Gson g = new Gson();
-            Maison maisonsALouer= g.fromJson(reponseVoirMaisons, Maison.class);
-            System.out.println(maisonsALouer);*/
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            //Toast.makeText(agencimmojcb972.getAppContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
-            //StringToJsonArray(result);
-            StringToJsonArray02(result);
-            //System.out.println(StringToJsonArray.)
-
-            listeMaisons.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    NaviguerVueMaisons();
-                }
-            });
-
-
-        }
-    }
-
-
-
     //Conversion de la réponse serveur en JSON Array puis affichage dans un tableau
     public void StringToJsonArray02(String reponseServeur) {
 
         //Transformation de la réponse serveur en Objets JAVA
         Gson g = new Gson();
-        Maison maisons[] = g.fromJson(reponseServeur, Maison[].class);
+        maisons = g.fromJson(reponseServeur, Maison[].class);
+
+        //System.out.println(maisons[2].getNom());
 
         //Copie des informations des classes en vue affichage
-        ArrayList<Maison> newMaisons =  new ArrayList<Maison>();
+        ArrayList<Maison> newMaisons = new ArrayList<>();
         for(Maison m: maisons) {
             System.out.println(m);
             newMaisons.add(m);
@@ -129,11 +85,9 @@ public class MaisonsActivity extends AppCompatActivity {
         MaisonAdapter itemsAdapter = new MaisonAdapter(this, newMaisons);
 
         // Attach the adapter to a ListView
-        listeMaisons = (ListView) findViewById(R.id.lv_maisons);
+        listeMaisons = findViewById(R.id.lv_maisons);
         listeMaisons.setAdapter(itemsAdapter);
     }
-
-
 
     //Conversion de la réponse serveur en JSON Array puis affichage dans un tableau en mode simple
     public void StringToJsonArray(String reponseServeur) {
@@ -149,8 +103,9 @@ public class MaisonsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i=0; i<jsonArray.length(); i++) {
+        ArrayList<String> list = new ArrayList<>();
+        assert jsonArray != null;
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 list.add( jsonArray.getString(i) );
             } catch (JSONException e) {
@@ -160,18 +115,70 @@ public class MaisonsActivity extends AppCompatActivity {
         //System.out.println(list);
 
         //Affichage d'une liste simple
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
 
         // Attach the adapter to a ListView
-        listeMaisons = (ListView) findViewById(R.id.lv_maisons);
+        listeMaisons = findViewById(R.id.lv_maisons);
         listeMaisons.setAdapter(itemsAdapter);
     }
 
-    protected void NaviguerVueMaisons()
+    @SuppressLint("StaticFieldLeak")
+    public class AfficherMaisons extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Toast.makeText(agencimmojcb972.getAppContext(), "Début du traitement asynchrone", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+
+            try {
+                GetRequete voirMaisons = new GetRequete();
+                String reponseVoirMaisons = voirMaisons.get("http://192.168.21.69:81/agenceimmo/mobile/mobile_maisons.php");
+                System.out.println(reponseVoirMaisons);
+
+                return reponseVoirMaisons;
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //Toast.makeText(agencimmojcb972.getAppContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
+            //StringToJsonArray(result);
+            StringToJsonArray02(result);
+
+            //Gestion de la maison sélectionnée
+            listeMaisons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    //Object maisonChoisie = parent.getItemAtPosition(position);
+
+                    NaviguerVueMaisons(position);
+                }
+            });
+        }
+    }
+
+    protected void NaviguerVueMaisons(int maison_selectionnee)
     {
         Intent intent = new Intent();
+        System.out.println(maisons[maison_selectionnee].getNom());
         intent.setClass(this, MaisonsDetailsActivity.class);
         intent.putExtra("prenom", agent.getPrenom());
+        intent.putExtra("entite", maisons[maison_selectionnee].getEntite());
+        intent.putExtra("nom", maisons[maison_selectionnee].getNom());
+        intent.putExtra("lieu", maisons[maison_selectionnee].getLieu());
+        intent.putExtra("superficie", maisons[maison_selectionnee].getSuperficie());
+        intent.putExtra("photo", maisons[maison_selectionnee].getPhoto());
+        intent.putExtra("type", maisons[maison_selectionnee].getType());
+        intent.putExtra("prix", maisons[maison_selectionnee].getPrix());
         startActivity(intent);
     }
 }
