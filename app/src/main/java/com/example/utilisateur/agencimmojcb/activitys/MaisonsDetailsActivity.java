@@ -3,11 +3,13 @@ package com.example.utilisateur.agencimmojcb.activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.utilisateur.agencimmojcb.R;
 import com.example.utilisateur.agencimmojcb.objets.Agent;
 import com.example.utilisateur.agencimmojcb.objets.Maison;
+import com.squareup.picasso.Picasso;
 
 public class MaisonsDetailsActivity extends AppCompatActivity {
     TextView prenomAgent;
@@ -17,6 +19,7 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
     TextView superficieMaison;
     TextView typeMaison;
     TextView prixMaison;
+    ImageView photoMaison;
 
     //ListView listeMaisons;
     Agent agent = new Agent();
@@ -28,13 +31,14 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maisons_details);
 
-        prenomAgent = (TextView) findViewById(R.id.tv_pseudo_vue4);
-        nomMaison = (TextView) findViewById(R.id.tv_nomMaison_vue4);
-        entiteMaison = (TextView) findViewById(R.id.tv_entiteMaison_vue4);
-        lieuMaison = (TextView) findViewById(R.id.tv_lieuMaison_vue4);
-        typeMaison = (TextView) findViewById(R.id.tv_typeMaison_vue4);
-        superficieMaison = (TextView) findViewById(R.id.tv_superficieMaison_vue4);
-        prixMaison = (TextView) findViewById(R.id.tv_prixMaison_vue4);
+        prenomAgent = findViewById(R.id.tv_pseudo_vue4);
+        nomMaison = findViewById(R.id.tv_nomMaison_vue4);
+        entiteMaison = findViewById(R.id.tv_entiteMaison_vue4);
+        lieuMaison = findViewById(R.id.tv_lieuMaison_vue4);
+        typeMaison = findViewById(R.id.tv_typeMaison_vue4);
+        superficieMaison = findViewById(R.id.tv_superficieMaison_vue4);
+        prixMaison = findViewById(R.id.tv_prixMaison_vue4);
+        photoMaison = findViewById(R.id.img_photoMaison);
 
         AfficherPrenomAgent();
         AfficherMaisonSelectionnee();
@@ -89,7 +93,8 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
                 }
 
                 int superficie = extras.getInt("superficie");
-                superficieMaison.setText(String.valueOf(superficie) + "m²");
+                String str_superficie = (String.valueOf(superficie));
+                superficieMaison.setText(this.getString(R.string.superficie, str_superficie));
                 maison.setSuperficie(superficie);
 
                 String type = extras.getString("type");
@@ -100,8 +105,18 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
                 }
 
                 int prix = extras.getInt("prix");
-                prixMaison.setText(String.valueOf(prix) + "€");
+                String str_prix = (String.valueOf(prix));
+                prixMaison.setText(this.getString(R.string.prix_maisons, str_prix));
                 maison.setPrix(prix);
+
+                String photo = extras.getString("photo");
+                if (type != null) {
+                    String url_photo = "http://192.168.21.69:81/agenceimmo/" + photo;
+                    //System.out.println(url_photo);
+                    Picasso.with(this).load(url_photo).into(photoMaison);
+                    //photoMaison.setImageURI(Uri.parse(url_photo));
+                    maison.setType(url_photo);
+                }
             }
         }
     }

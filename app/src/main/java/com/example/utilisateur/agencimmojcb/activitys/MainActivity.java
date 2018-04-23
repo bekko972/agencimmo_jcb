@@ -1,21 +1,25 @@
 package com.example.utilisateur.agencimmojcb.activitys;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.utilisateur.agencimmojcb.objets.Agent;
 import com.example.utilisateur.agencimmojcb.R;
 import com.example.utilisateur.agencimmojcb.agencimmojcb972;
+import com.example.utilisateur.agencimmojcb.objets.Agent;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -36,9 +40,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        login = (EditText) findViewById(R.id.ed_pseudo_vue1); //identification du login
-        pwd = (EditText) findViewById(R.id.ed_password);   //identification du mot de passe
-        valider = (Button) findViewById(R.id.btn_valider);  //identification du bouton
+        login = findViewById(R.id.ed_pseudo_vue1); //identification du login
+        pwd = findViewById(R.id.ed_password);   //identification du mot de passe
+        valider = findViewById(R.id.btn_valider);  //identification du bouton
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View valider) {
@@ -56,14 +60,15 @@ public class MainActivity extends Activity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class AuthentificationAgents extends AsyncTask<String, String, String> {
 
         OkHttpClient client = new OkHttpClient();
 
-        protected String user;
-        protected String password;
+        private String user;
+        private String password;
 
-        public AuthentificationAgents(String user, String password) {
+        private AuthentificationAgents(String user, String password) {
             this.user = user;
             this.password = password;
         }
@@ -74,6 +79,7 @@ public class MainActivity extends Activity {
             Toast.makeText(agencimmojcb972.getAppContext(), "Connexion en cours", Toast.LENGTH_SHORT).show();
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
         protected String doInBackground(String... params) {
             RequestBody formBody = new FormBody.Builder()
@@ -82,21 +88,22 @@ public class MainActivity extends Activity {
                     .build();
 
             Request request = new Request.Builder()     //Envoi requête de connexion au serveur PHP
-                    .url("http://192.168.1.13:81/agenceimmo/mobile/mobile_login.php")
+                    .url("http://192.168.21.69:81/agenceimmo/mobile/mobile_login.php")
                     .post(formBody)
                     .build();
 
-            Response response = null;
+            Response response;
             try {
                 response = client.newCall(request).execute();
                 if (!response.isSuccessful())
                     throw new IOException("Unexpected code " + response);
-                String jsonInString = response.body().string();//Réponse Serveur
+                String jsonInString = null;//Réponse Serveur
+                if (response.body() != null) {
+                    jsonInString = Objects.requireNonNull(response.body()).string();
+                }
                 System.out.println(jsonInString);
 
                 return jsonInString;
-
-                //return codeErreur;
 
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,30 +1,19 @@
 package com.example.utilisateur.agencimmojcb.objets;
 
-import java.util.ArrayList;
-
 /**
  * Created by Utilisateur on 09/03/2018.
  */
 
 public class Maison {
-    protected String entite = "inconnu";
-    protected String nom = "inconnu";
-    protected String statut = "inconnu";
-    protected String type = "inconnu";
-    protected String photo = "inconnu";
-    protected String lieu = "inconnu";
-    protected int superficie = 0;
-    protected int prix = 0;
-    protected String description = "inconnu";
-
-
-    private ArrayList<String> maisons;
-
-   /* public Maison() {
-        maisons = new ArrayList<String>();
-    }*/
-
-
+    private String entite = "inconnu";
+    private String nom = "inconnu";
+    //private String statut = "inconnu";
+    private String type = "inconnu";
+    private String photo = "inconnu";
+    private String lieu = "inconnu";
+    private int superficie = 0;
+    private int prix = 0;
+    //private String description = "inconnu";
 
     public Maison()
     {
@@ -36,13 +25,13 @@ public class Maison {
         System.out.println("Création d'une maison avec paramètres");
         entite = entite_maison;
         nom = nom_maison;
-        statut = statut_maison;
+        //statut = statut_maison;
         type = type_maison;
         photo = photo_maison;
         lieu = lieu_maison;
         superficie = superficie_maison;
         prix = prix_maison;
-        description = description_maison;
+        //description = description_maison;
     }
 
     public String getEntite(){
@@ -106,5 +95,9 @@ public class Maison {
 
     public void setPrix(int prix) {
         this.prix = prix;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

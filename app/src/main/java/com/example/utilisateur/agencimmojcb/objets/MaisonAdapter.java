@@ -1,16 +1,16 @@
 package com.example.utilisateur.agencimmojcb.objets;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.utilisateur.agencimmojcb.R;
-
-import org.w3c.dom.Text;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,9 @@ public class MaisonAdapter extends ArrayAdapter<Maison> {
         super(context, 0, immeubles);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Get the data item for this position
         Maison maison = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -32,17 +33,21 @@ public class MaisonAdapter extends ArrayAdapter<Maison> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_maisons, parent, false);
         }
         // Lookup view for data population
-        TextView tvEntite = (TextView) convertView.findViewById(R.id.tvEntite);
-        TextView tvType = (TextView) convertView.findViewById(R.id.tvType);
-        TextView tvLieu = (TextView) convertView.findViewById(R.id.tvLieu);
-        TextView tvPrix = (TextView) convertView.findViewById(R.id.tvPrix);
+        ImageView imgMaison = convertView.findViewById(R.id.img_maisons);
+        TextView tvEntite = convertView.findViewById(R.id.tvEntite);
+        TextView tvType = convertView.findViewById(R.id.tvType);
+        TextView tvLieu = convertView.findViewById(R.id.tvLieu);
+        TextView tvPrix = convertView.findViewById(R.id.tvPrix);
+
         // Populate the data into the template view using the data object
+        assert maison != null;
+        String url_photo = getContext().getString(R.string.url_maisons, maison.getPhoto());
+        Picasso.with(getContext()).load(url_photo).into(imgMaison);
         tvEntite.setText(maison.getEntite());
         tvType.setText(maison.getType());
         tvLieu.setText(maison.getLieu());
-
         String prix_str = String.valueOf(maison.getPrix());
-        tvPrix.setText(prix_str + "€");
+        tvPrix.setText((getContext()).getString(R.string.prix_maisons, prix_str));
         // Return the completed view to render on screen
         return convertView;
     }

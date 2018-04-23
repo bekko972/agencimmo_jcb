@@ -10,18 +10,22 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/tv_pseudo_vue2"
         android:hint="@string/pseudo"/>
 
     <Button
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:id="@+id/btn_maisons_vue2"
         android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:text="@string/afficher_maison"
         android:textSize="20sp"
-        />
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp" />
 
 
 </LinearLayout>
