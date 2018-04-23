@@ -31,6 +31,7 @@ public class MaisonsActivity extends AppCompatActivity {
     TextView prenomAgent;
     ListView listeMaisons;
     Agent agent = new Agent();
+    Maison maisons[] = new Maison[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,13 +97,17 @@ public class MaisonsActivity extends AppCompatActivity {
             //Toast.makeText(agencimmojcb972.getAppContext(), "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
             //StringToJsonArray(result);
             StringToJsonArray02(result);
-            //System.out.println(StringToJsonArray.)
+           // System.out.println(maisons[1])
 
+            //Gestion de la maison sélectionnée
             listeMaisons.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    NaviguerVueMaisons();
+
+                    //Object maisonChoisie = parent.getItemAtPosition(position);
+
+                    NaviguerVueMaisons(position);
                 }
             });
 
@@ -117,7 +122,9 @@ public class MaisonsActivity extends AppCompatActivity {
 
         //Transformation de la réponse serveur en Objets JAVA
         Gson g = new Gson();
-        Maison maisons[] = g.fromJson(reponseServeur, Maison[].class);
+        maisons = g.fromJson(reponseServeur, Maison[].class);
+
+        //System.out.println(maisons[2].getNom());
 
         //Copie des informations des classes en vue affichage
         ArrayList<Maison> newMaisons =  new ArrayList<Maison>();
@@ -167,11 +174,19 @@ public class MaisonsActivity extends AppCompatActivity {
         listeMaisons.setAdapter(itemsAdapter);
     }
 
-    protected void NaviguerVueMaisons()
+    protected void NaviguerVueMaisons(int maison_selectionnee)
     {
         Intent intent = new Intent();
+        System.out.println(maisons[maison_selectionnee].getNom());
         intent.setClass(this, MaisonsDetailsActivity.class);
         intent.putExtra("prenom", agent.getPrenom());
+        intent.putExtra("entite", maisons[maison_selectionnee].getEntite());
+        intent.putExtra("nom", maisons[maison_selectionnee].getNom());
+        intent.putExtra("lieu", maisons[maison_selectionnee].getLieu());
+        intent.putExtra("superficie", maisons[maison_selectionnee].getSuperficie());
+        intent.putExtra("photo", maisons[maison_selectionnee].getPhoto());
+        intent.putExtra("type", maisons[maison_selectionnee].getType());
+        intent.putExtra("prix", maisons[maison_selectionnee].getPrix());
         startActivity(intent);
     }
 }

@@ -20,4 +20,81 @@
         android:textColor="@color/colorPrimary"
         android:hint="@string/pseudo"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_nomMaison_vue4"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/tv_pseudo_vue4"
+        android:textSize="17sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:id="@+id/tv_prixMaison_vue4"
+        android:textColor="@color/colorAccent"
+        android:layout_toRightOf="@+id/tv_nomMaison_vue4"
+        android:layout_alignTop="@+id/tv_nomMaison_vue4"
+        android:layout_toEndOf="@+id/tv_nomMaison_vue4"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nomMaison_vue4"
+        android:layout_marginTop="20dp"
+        android:id="@+id/img_photoMaison"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_entiteMaison_vue4"
+        android:layout_below="@+id/img_photoMaison"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_entiteMaison_vue4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_typeMaison_vue4"
+        android:layout_toRightOf="@+id/tv_entiteMaison_vue4"
+        android:layout_toEndOf="@+id/tv_entiteMaison_vue4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_typeMaison_vue4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_superficieMaison_vue4"
+        android:layout_toRightOf="@+id/tv_typeMaison_vue4"
+        android:layout_toEndOf="@+id/tv_typeMaison_vue4"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_lieuMaison_vue4"
+        android:layout_below="@+id/tv_entiteMaison_vue4" />
+
+
+
+
+
+
+
 </RelativeLayout>

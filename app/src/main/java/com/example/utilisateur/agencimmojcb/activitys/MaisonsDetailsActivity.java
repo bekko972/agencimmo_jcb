@@ -31,6 +31,10 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
         prenomAgent = (TextView) findViewById(R.id.tv_pseudo_vue4);
         nomMaison = (TextView) findViewById(R.id.tv_nomMaison_vue4);
         entiteMaison = (TextView) findViewById(R.id.tv_entiteMaison_vue4);
+        lieuMaison = (TextView) findViewById(R.id.tv_lieuMaison_vue4);
+        typeMaison = (TextView) findViewById(R.id.tv_typeMaison_vue4);
+        superficieMaison = (TextView) findViewById(R.id.tv_superficieMaison_vue4);
+        prixMaison = (TextView) findViewById(R.id.tv_prixMaison_vue4);
 
         AfficherPrenomAgent();
         AfficherMaisonSelectionnee();
@@ -77,19 +81,16 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
                     maison.setNom(nomMaison.getText().toString());
                 }
 
-                /*String lieu = extras.getString("lieu");
+                String lieu = extras.getString("lieu");
                 if(lieu!=null)
                 {
                     lieuMaison.setText(String.format("%s",lieu));
                     maison.setLieu(lieuMaison.getText().toString());
                 }
 
-                String superficie = extras.getString("superficie");
-                if(superficie!=null)
-                {
-                    superficieMaison.setText(String.format("%s",superficie));
-                    maison.setSuperficie(Integer.parseInt(superficieMaison.getText().toString()));
-                }
+                int superficie = extras.getInt("superficie");
+                superficieMaison.setText(String.valueOf(superficie) + "m²");
+                maison.setSuperficie(superficie);
 
                 String type = extras.getString("type");
                 if(type!=null)
@@ -98,12 +99,9 @@ public class MaisonsDetailsActivity extends AppCompatActivity {
                     maison.setType(typeMaison.getText().toString());
                 }
 
-                String prix = extras.getString("prix");
-                if(prix!=null)
-                {
-                    prixMaison.setText(String.format("%s",prix));
-                    maison.setPrix(Integer.parseInt(prixMaison.getText().toString()));
-                }*/
+                int prix = extras.getInt("prix");
+                prixMaison.setText(String.valueOf(prix) + "€");
+                maison.setPrix(prix);
             }
         }
     }

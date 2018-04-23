@@ -84,6 +84,27 @@ public class Maison {
         return "\t"+ type+ " "+ nom + " de type "+ type + " - superficie: " + superficie + "m² - prix: " + prix;
     }
 
-
-
+    public void setNom(String nom) {
+        this.nom = nom;
     }
+
+    public void setEntite(String entite) {
+        this.entite = entite;
+    }
+
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
+    }
+
+    public void setSuperficie(int superficie) {
+        this.superficie = superficie;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setPrix(int prix) {
+        this.prix = prix;
+    }
+}
